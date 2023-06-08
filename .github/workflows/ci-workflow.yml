@@ -11,7 +11,9 @@ on:
       - '**.js'
       - 'bin/**'
   workflow_dispatch:
-      paths: *path_anchor
+    paths:
+      - '**.js'
+      - 'bin/**'
 
 jobs:
   lint:

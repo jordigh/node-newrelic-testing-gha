@@ -1,0 +1,72 @@
+name: Node Agent CI (no-op run)
+
+on: 
+  push:
+    paths-ignore:
+      - '**.js'
+      - 'bin/**'
+  pull_request:
+    paths-ignore:
+      - '**.js'
+      - 'bin/**'
+  workflow_dispatch:
+    paths-ignore:
+      - '**.js'
+      - 'bin/**'
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [lts/*]
+
+    steps:
+      - run: 'echo "No linting required"'
+  ci:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [lts/*]
+
+    steps:
+      - run: 'echo "No CI of scripts required"'
+  unit:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [14.x, 16.x, 18.x]
+
+    steps:
+      - run: 'echo "No unit tests required"'
+
+  integration:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [14.x, 16.x, 18.x]
+
+    steps:
+      - run: 'echo "No integration tests required"'
+  versioned:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [14.x, 16.x, 18.x]
+
+    steps:
+      - run: 'echo "No versioned tests required"'
+  codecov:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [14.x, 16.x, 18.x]
+
+    steps:
+      - run: 'echo "No code coverage required"'
