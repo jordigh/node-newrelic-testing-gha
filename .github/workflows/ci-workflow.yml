@@ -182,3 +182,11 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           directory: versioned-tests-${{ matrix.node-version }}
           flags: versioned-tests-${{ matrix.node-version }}
+
+  print_context:
+    runs-on: ubuntu-latest
+    steps:
+      - env:
+          EVENT_CONTEXT: ${{ toJSON(github.event) }}
+        run: |
+          echo $EVENT_CONTEXT

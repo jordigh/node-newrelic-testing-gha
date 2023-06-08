@@ -70,3 +70,11 @@ jobs:
 
     steps:
       - run: 'echo "No code coverage required"'
+
+  print_context:
+    runs-on: ubuntu-latest
+    steps:
+      - env:
+          EVENT_CONTEXT: ${{ toJSON(github.event) }}
+        run: |
+          echo $EVENT_CONTEXT
