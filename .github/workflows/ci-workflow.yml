@@ -1,7 +1,7 @@
 name: Node Agent CI
 
 on: 
-  workflow_dispatch
+  workflow_dispatch: {}
   pull_request:
     types:
       # Created PR
