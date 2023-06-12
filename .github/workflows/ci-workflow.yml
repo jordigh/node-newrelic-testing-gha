@@ -2,18 +2,12 @@ name: Node Agent CI
 
 
 on: 
-  push:
-    paths:
-      - '**.js'
-      - 'bin/**'
   pull_request:
-    paths:
-      - '**.js'
-      - 'bin/**'
+    branches-ignore:
+      - 'release/v[0-9]+.[0-9]+.[0-9]+'
   workflow_dispatch:
-    paths:
-      - '**.js'
-      - 'bin/**'
+    branches-ignore:
+      - 'release/v[0-9]+.[0-9]+.[0-9]+'
 
 jobs:
   lint:
