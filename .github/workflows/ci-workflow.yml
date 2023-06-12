@@ -13,7 +13,7 @@ on:
 
 jobs:
   lint:
-    if: ${{ !startsWith(github.head_ref, 'release/v') || github.event.pull_request.merged == true || github.event.type != 'closed' }}
+    if: ${{ !startsWith(github.head_ref, 'release/v') && (github.event.pull_request.merged == true || github.event.action != 'closed') }}
     runs-on: ubuntu-latest
 
     strategy:
@@ -34,7 +34,7 @@ jobs:
       run: npm run lint:lockfile
 
   ci:
-    if: ${{ !startsWith(github.head_ref, 'release/v') || github.event.pull_request.merged == true || github.event.type != 'closed' }}
+    if: ${{ !startsWith(github.head_ref, 'release/v') && (github.event.pull_request.merged == true || github.event.action != 'closed') }}
     runs-on: ubuntu-latest
 
     strategy:
@@ -53,7 +53,7 @@ jobs:
       run: npm run unit:scripts
 
   unit:
-    if: ${{ !startsWith(github.head_ref, 'release/v') || github.event.pull_request.merged == true || github.event.type != 'closed' }}
+    if: ${{ !startsWith(github.head_ref, 'release/v') && (github.event.pull_request.merged == true || github.event.action != 'closed') }}
     runs-on: ubuntu-latest
 
     strategy:
@@ -84,7 +84,7 @@ jobs:
         path: ./coverage/esm-unit/lcov.info
 
   integration:
-    if: ${{ !startsWith(github.head_ref, 'release/v') || github.event.pull_request.merged == true || github.event.type != 'closed' }}
+    if: ${{ !startsWith(github.head_ref, 'release/v') && (github.event.pull_request.merged == true || github.event.action != 'closed') }}
     runs-on: ubuntu-latest
 
     strategy:
@@ -110,7 +110,7 @@ jobs:
         path: ./coverage/integration/lcov.info
 
   versioned:
-    if: ${{ !startsWith(github.head_ref, 'release/v') || github.event.pull_request.merged == true || github.event.type != 'closed' }}
+    if: ${{ !startsWith(github.head_ref, 'release/v') && (github.event.pull_request.merged == true || github.event.action != 'closed') }}
     runs-on: ubuntu-latest
 
     strategy:
@@ -148,7 +148,7 @@ jobs:
         path: ./coverage/versioned/lcov.info
 
   codecov:
-    if: ${{ !startsWith(github.head_ref, 'release/v') || github.event.pull_request.merged == true || github.event.type != 'closed' }}
+    if: ${{ !startsWith(github.head_ref, 'release/v') && (github.event.pull_request.merged == true || github.event.action != 'closed') }}
     needs: [unit, integration, versioned]
     runs-on: ubuntu-latest
 
@@ -189,6 +189,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - env:
-          EVENT_CONTEXT: ${{ toJSON(github.event) }}
+          EVENT_CONTEXT: ${{ toJSON(github) }}
+          SHOULD_RUN: ${{ !startsWith(github.head_ref, 'release/v') || github.event.pull_request.merged == true || github.event.action != 'closed' }}
+          STARTS_WITH: ${{ startsWith(github.head_ref, 'release/v') }}
+          IS_MERGED: ${{ github.event.pull_request.merged == true }}
+          ACTION: ${{ github.event.action }}
         run: |
-          echo $EVENT_CONTEXT
+          echo "SHOULD_RUN: $SHOULD_RUN\nSTARTS_WITH: $STARTS_WITH\nIS_MERGED: $IS_MERGED\nACTION: $ACTION\n$EVENT_CONTEXT"
