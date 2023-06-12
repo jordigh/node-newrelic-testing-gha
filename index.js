@@ -250,4 +250,4 @@ function recordSourceMapMetric(agent) {
   }
 }
 
-function uselessFunction() {}
+// There used to be a function here
