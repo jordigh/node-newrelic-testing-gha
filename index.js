@@ -249,3 +249,5 @@ function recordSourceMapMetric(agent) {
     agent.metrics.getOrCreateMetric(NAMES.FEATURES.SOURCE_MAPS).incrementCallCount()
   }
 }
+
+// There used to be a function here
