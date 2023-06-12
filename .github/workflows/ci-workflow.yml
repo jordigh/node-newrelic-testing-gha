@@ -1,6 +1,13 @@
 name: Node Agent CI
 
-on: [push, pull_request, workflow_dispatch]
+
+on: 
+  pull_request:
+    branches-ignore:
+      - 'release/v[0-9]+.[0-9]+.[0-9]+'
+  workflow_dispatch:
+    branches-ignore:
+      - 'release/v[0-9]+.[0-9]+.[0-9]+'
 
 jobs:
   lint:
@@ -169,3 +176,11 @@ jobs:
           token: ${{ secrets.CODECOV_TOKEN }}
           directory: versioned-tests-${{ matrix.node-version }}
           flags: versioned-tests-${{ matrix.node-version }}
+
+  print_context:
+    runs-on: ubuntu-latest
+    steps:
+      - env:
+          EVENT_CONTEXT: ${{ toJSON(github.event) }}
+        run: |
+          echo $EVENT_CONTEXT
