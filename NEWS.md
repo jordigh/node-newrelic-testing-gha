@@ -1,3 +1,7 @@
+### v10.2.1 (2023-06-12)
+
+* Added a fake release for testing
+
 ### v10.2.0 (2023-06-06)
 
 #### Features
